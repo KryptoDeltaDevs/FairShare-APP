@@ -1,0 +1,22 @@
+/ FontAwesome + Bootstrap-Social (optional, only if you use social login buttons)
+link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous"
+link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.0.0/bootstrap-social.css" integrity="sha384-KMis1ci1uYEByUqyQ+ys92P9u9WtqmYQmUvEpXsB5BuMYyTHljPVNJ24Jl6ib3o8" crossorigin="anonymous"
+
+.container.mt-5
+  .row.justify-content-center
+    .col-md-6
+      .card.shadow
+        .card-body
+          h3.text-center.mb-4 Login
+
+          form method='post' action='/auth/login' id='form-login'
+            .mb-3
+              label.form-label for='input-username' Username
+              input.form-control type='text' name='username' id='input-username' placeholder='Enter your username'
+
+            .mb-3
+              label.form-label for='input-password' Password
+              input.form-control type='password' name='password' id='input-password' placeholder='Enter your password'
+
+            .d-grid
+              button.btn.btn-primary type='submit' id='button-login' Login

@@ -1,0 +1,6 @@
+.force-wrap {
+    overflow-wrap: anywhere;
+    width: 100%;
+    display: block;
+}
+  
