@@ -1,0 +1,15 @@
+.container.mt-5
+  .row.justify-content-center
+    .col-md-8
+      .card.shadow
+        .card-body
+          h3.mb-4.text-center Account Details
+
+          dl.row
+            dt.col-sm-3 Username:
+            dd.col-sm-9
+              = current_account['username']
+
+            dt.col-sm-3 Email:
+            dd.col-sm-9
+              = current_account['email']
