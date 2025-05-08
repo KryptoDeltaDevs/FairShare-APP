@@ -11,13 +11,15 @@ module FairShare
       @config = config
     end
 
-    def call(username:, password:)
+    def call(email:, password:)
       response = HTTP.post("#{@config.API_URL}/auth/authenticate",
-                           json: { username:, password: })
+                           json: { email:, password: })
+
+      puts response
 
       raise(UnauthorizedError) unless response.code == 200
 
-      response.parse['attributes']
+      response.parse['data']['attributes']
     end
   end
 end

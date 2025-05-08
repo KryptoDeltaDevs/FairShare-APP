@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'roda'
-require_relative './app'
+require_relative 'app'
 
 module FairShare
   # Web controller for FairShare API
@@ -9,8 +9,8 @@ module FairShare
     route('account') do |routing|
       routing.on do
         # GET /account/login
-        routing.get String do |username|
-          if @current_account && @current_account['username'] == username
+        routing.get String do |email|
+          if @current_account && @current_account['email'] == email
             view :account, locals: { current_account: @current_account }
           else
             routing.redirect '/auth/login'

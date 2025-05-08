@@ -17,10 +17,10 @@ nav.navbar.navbar-expand-sm.navbar-dark.bg-primary role="navigation"
         - if @current_account
           li.nav-item.dropdown
             a.nav-link.dropdown-toggle href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-              = @current_account['username']
+              = @current_account['email']
             ul.dropdown-menu.dropdown-menu-end aria-labelledby="navbarDropdown"
               li
-                a.dropdown-item href="/account/#{@current_account['username']}" Account
+                a.dropdown-item href="/account/#{@current_account['email']}" Account
               li
                 a.dropdown-item href="/auth/logout" Logout
         - else

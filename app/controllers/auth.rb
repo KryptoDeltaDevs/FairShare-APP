@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'roda'
-require_relative './app'
+require_relative 'app'
 
 module FairShare
   # Web controller for FairShare API
@@ -17,15 +17,15 @@ module FairShare
         # POST /auth/login
         routing.post do
           account = AuthenticateAccount.new(App.config).call(
-            username: routing.params['username'],
+            email: routing.params['email'],
             password: routing.params['password']
           )
 
           session[:current_account] = account
-          flash[:notice] = "Welcome back #{account['username']}!"
+          flash[:notice] = "Welcome back #{account['name']}!"
           routing.redirect '/'
         rescue StandardError
-          flash.now[:error] = 'Username and password did not match our records'
+          flash.now[:error] = 'Email and password did not match our records'
           response.status = 400
           view :login
         end
