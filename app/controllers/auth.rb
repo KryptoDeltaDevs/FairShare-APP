@@ -36,6 +36,28 @@ module FairShare
         end
       end
 
+      @register_route = '/auth/register'
+      routing.is 'register' do
+        # GET /auth/register
+        routing.get do
+          view :register
+        end
+
+        # POST /auth/register
+        routing.post do
+            account_data = routing.params.transform_keys(&:to_sym)
+            CreateAccount.new(App.config).call(**account_data)
+  
+            flash[:notice] = 'Please login with your new account information'
+            routing.redirect @login_route
+          rescue StandardError => e
+            App.logger.error "ERROR CREATING ACCOUNT: #{e.inspect}"
+            App.logger.error e.backtrace
+            flash[:error] = 'Could not create account'
+            routing.redirect @register_route
+        end
+      end
+
       @logout_route = '/auth/logout'
       routing.on 'logout' do
         routing.get do
