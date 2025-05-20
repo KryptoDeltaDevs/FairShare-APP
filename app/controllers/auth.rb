@@ -20,7 +20,6 @@ module FairShare
             email: routing.params['email'],
             password: routing.params['password']
           )
-          puts account_info
           current_account = Account.new(account_info[:account], account_info[:auth_token])
           CurrentSession.new(session).current_account = current_account
           flash[:notice] = "Welcome back #{current_account.name}!"
