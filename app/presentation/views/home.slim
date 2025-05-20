@@ -12,7 +12,7 @@
             i.fa.fa-info-circle.me-2
             | ...
 
-          - unless current_account
+          - unless current_account.logged_in?
             .text-center.mt-4
               a.btn.btn-primary.btn-lg href='/auth/login'
                 i.fa.fa-sign-in.me-2
