@@ -1,0 +1,16 @@
+{
+  "type": "authenticated_account",
+  "attributes": {
+    "account": {
+      "type": "account",
+      "attributes": {
+        "id": "9d5c6162-0336-483b-ad81-8bc350015e08",
+        "name": "Jane",
+        "email": "jane@gmail.com",
+        "created_at": "2025-05-08 14:30:18 +0800",
+        "updated_at": "2025-05-08 14:30:18 +0800"
+      }
+    },
+    "auth_token": "GdhNpr9krTN5cwDKFN2XEVBM2PdDPb6qGzUQlvhiGC9AgHWZzshlPBH_ShXu9kfBWIgSgj8WhOebbZS1oHBzv-KDxP3FdRJBTG54ljaHclklrmYh3ok-faWq0bzCmUBsneO_ev6l1kieJkG76tTClnsySHKB3ZvELj80G6Hzw6cdqW8sCt8jgRlF-HoOwUfwBEPF_ys0VHKFCN_-6PU_HfRMgOIHOTMRxkR3TrVSQOJ2fE3LUQhys-Ty8-ak3VFQeplpuDD6Hnl3IH1RRLbanxeTOkCFv2s4iecTmpSxNo6HszT2EQgh3jSwphQSWv6_7aI-10eYoXnGa4HNz2bizhat-UWbVTZNlSE2"
+  }
+}

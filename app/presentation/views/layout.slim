@@ -14,6 +14,112 @@ html
     script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
     script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
 
+    / nav.navbar.navbar-dark.sticky-top.bg-dark.flex-md-nowrap.p-0
+    /   a.navbar-brand.col-sm-3.col-md-2.mr-0 href="#" Company name
+    /   input.form-control.form-control-dark.w-100 type="text" placeholder="Search" aria-label="Search"
+    /   ul.navbar-nav.px-3
+    /     li.nav-item.text-nowrap
+    /       a.nav-link href="#" Sign out
+
+    / .container-fluid
+    /   .row
+    /     nav.col-md-2.d-none.d-md-block.bg-light.sidebar
+    /       .sidebar-sticky
+    /         ul.nav.flex-column
+    /           li.nav-item
+    /             a.nav-link.active href="#"
+    /               span data-feather="home"
+    /               | Dashboard 
+    /               span.sr-only (current)
+    /           li.nav-item
+    /             a.nav-link href="#"
+    /               span data-feather="file"
+    /               | Orders
+    /           li.nav-item
+    /             a.nav-link href="#"
+    /               span data-feather="shopping-cart"
+    /               | Products
+    /           li.nav-item
+    /             a.nav-link href="#"
+    /               span data-feather="users"
+    /               | Customers
+    /           li.nav-item
+    /             a.nav-link href="#"
+    /               span data-feather="bar-chart-2"
+    /               | Reports
+    /           li.nav-item
+    /             a.nav-link href="#"
+    /               span data-feather="layers"
+    /               | Integrations
+
+    /         h6.sidebar-heading.d-flex.justify-content-between.align-items-center.px-3.mt-4.mb-1.text-muted
+    /           span Saved reports
+    /           a.d-flex.align-items-center.text-muted href="#"
+    /             span data-feather="plus-circle"
+
+    /         ul.nav.flex-column.mb-2
+    /           li.nav-item
+    /             a.nav-link href="#"
+    /               span data-feather="file-text"
+    /               | Current month
+    /           li.nav-item
+    /             a.nav-link href="#"
+    /               span data-feather="file-text"
+    /               | Last quarter
+    /           li.nav-item
+    /             a.nav-link href="#"
+    /               span data-feather="file-text"
+    /               | Social engagement
+    /           li.nav-item
+    /             a.nav-link href="#"
+    /               span data-feather="file-text"
+    /               | Year-end sale
+
+    /     main.col-md-9.ml-sm-auto.col-lg-10.pt-3.px-4 role="main"
+    /       .d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pb-2.mb-3.border-bottom
+    /         h1.h2 Dashboard
+    /         .btn-toolbar.mb-2.mb-md-0
+    /           .btn-group.mr-2
+    /             button.btn.btn-sm.btn-outline-secondary Share
+    /             button.btn.btn-sm.btn-outline-secondary Export
+    /           button.btn.btn-sm.btn-outline-secondary.dropdown-toggle
+    /             span data-feather="calendar"
+    /             | This week
+
+    /       canvas.my-4#myChart width="900" height="380"
+
+    /       h2 Section title
+    /       .table-responsive
+    /         table.table.table-striped.table-sm
+    /           thead
+    /             tr
+    /               th #
+    /               - 4.times do
+    /                 th Header
+    /           tbody
+                / - [
+                /   [1001, "Lorem", "ipsum", "dolor", "sit"],
+                /   [1002, "amet", "consectetur", "adipiscing", "elit"],
+                /   [1003, "Integer", "nec", "odio", "Praesent"],
+                /   [1003, "libero", "Sed", "cursus", "ante"],
+                /   [1004, "dapibus", "diam", "Sed", "nisi"],
+                /   [1005, "Nulla", "quis", "sem", "at"],
+                /   [1006, "nibh", "elementum", "imperdiet", "Duis"],
+                /   [1007, "sagittis", "ipsum", "Praesent", "mauris"],
+                /   [1008, "Fusce", "nec", "tellus", "sed"],
+                /   [1009, "augue", "semper", "porta", "Mauris"],
+                /   [1010, "massa", "Vestibulum", "lacinia", "arcu"],
+                /   [1011, "eget", "nulla", "Class", "aptent"],
+                /   [1012, "taciti", "sociosqu", "ad", "litora"],
+                /   [1013, "torquent", "per", "conubia", "nostra"],
+                /   [1014, "per", "inceptos", "himenaeos", "Curabitur"],
+                /   [1015, "sodales", "ligula", "in", "libero"]
+                / ].each do |row|
+                /   tr
+                /     - row.each do |cell|
+                /       td= cell
+
+
     == render :nav
     div class='container' id='html_body'
       section

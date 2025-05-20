@@ -5,10 +5,9 @@ require 'webmock/minitest'
 
 describe 'Test Service Objects' do
   before do
-    @credentials = { name: 'john', password: 'mypa$$w0rd' }
-    @mal_credentials = { name: 'john', password: 'wrongpassword' }
-    @api_account = { attributes:
-                       { name: 'john', email: 'john@nthu.edu.tw' } }
+    @credentials = { email: 'jane@gmail.com', password: 'jane123' }
+    @mal_credentials = { email: 'jane@nthu.edu.tw', password: 'jane' }
+    @api_account = { id: '9d5c6162-0336-483b-ad81-8bc350015e08', name: 'Jane', email: 'jane@gmail.com' }
   end
 
   after do
@@ -17,15 +16,20 @@ describe 'Test Service Objects' do
 
   describe 'Find authenticated account' do
     it 'HAPPY: should find an authenticated account' do
+      auth_account_file = 'spec/fixtures/auth_account.json'
+      auth_return_json = File.read(auth_account_file)
+
       WebMock.stub_request(:post, "#{API_URL}/auth/authenticate")
              .with(body: @credentials.to_json)
-             .to_return(body: @api_account.to_json,
+             .to_return(body: auth_return_json,
                         headers: { 'content-type' => 'application/json' })
 
-      account = FairShare::AuthenticateAccount.new(app.config).call(**@credentials)
+      auth = FairShare::AuthenticateAccount.new(app.config).call(**@credentials)
+      account = auth[:account]
       _(account).wont_be_nil
-      _(account['name']).must_equal @api_account[:attributes][:name]
-      _(account['email']).must_equal @api_account[:attributes][:email]
+      _(account['id']).must_equal @api_account[:id]
+      _(account['name']).must_equal @api_account[:name]
+      _(account['email']).must_equal @api_account[:email]
     end
 
     it 'BAD: should not find a false authenticated account' do
