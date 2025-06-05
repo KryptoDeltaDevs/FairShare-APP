@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
 require 'roda'
-require 'slim'
 
 module FairShare
   # Base class for FairShare Web Application
   class App < Roda
-    plugin :render, engine: 'slim', views: 'app/presentation/views'
+    plugin :render, engine: 'erb', views: 'app/presentation/views'
     plugin :assets, css: 'style.css', path: 'app/presentation/assets'
     plugin :public, root: 'app/presentation/public'
     plugin :multi_route
@@ -22,7 +21,9 @@ module FairShare
 
       # GET /
       routing.root do
-        view 'home', locals: { current_account: @current_account }
+        routing.redirect '/dashboard' if @current_account.logged_in?
+        # view('pages/home', layout: false, locals: { current_account: @current_account })
+        routing.redirect '/auth/login'
       end
     end
   end

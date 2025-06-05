@@ -1,0 +1,4 @@
+en:
+  errors:
+    name: "Group name must be filled"
+    description: "Group description must be in proper format"

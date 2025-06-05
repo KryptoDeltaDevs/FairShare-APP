@@ -11,23 +11,27 @@ module FairShare
       routing.is 'login' do
         # GET /auth/login
         routing.get do
-          view :login
+          ViewRenderer.new(self, content: 'pages/login', layouts: ['layouts/auth', 'layouts/root']).render
         end
 
         # POST /auth/login
         routing.post do
-          account_info = AuthenticateAccount.new(App.config).call(
-            email: routing.params['email'],
-            password: routing.params['password']
-          )
-          current_account = Account.new(account_info[:account], account_info[:auth_token])
+          credentials = Form::LoginCredentials.new.call(routing.params)
+
+          if credentials.failure?
+            flash[:error] = 'Please enter both email and password'
+            routing.redirect @login_route
+          end
+
+          authenticated = AuthenticateAccount.new(App.config).call(**credentials.values)
+          current_account = Account.new(authenticated[:account], authenticated[:auth_token])
           CurrentSession.new(session).current_account = current_account
           flash[:notice] = "Welcome back #{current_account.name}!"
-          routing.redirect '/'
+          routing.redirect '/dashboard'
         rescue AuthenticateAccount::UnauthorizedError
           flash.now[:error] = 'Email and password did not match our records'
           response.status = 401
-          view :login
+          ViewRenderer.new(self, content: 'pages/login', layouts: ['layouts/auth', 'layouts/root']).render
         rescue AuthenticateAccount::ApiServerError => e
           App.logger.warn "API server error: #{e.inspect}\n#{e.backtrace}"
           flash[:error] = 'Our servers are not responding -- please try later'
@@ -41,32 +45,40 @@ module FairShare
         routing.is do
           # GET /auth/register
           routing.get do
-            view :register
+            ViewRenderer.new(self, content: 'pages/register', layouts: ['layouts/auth', 'layouts/root']).render
           end
 
           # POST /auth/register
           routing.post do
-            account_data = routing.params.transform_keys(&:to_sym)
-            VerifyRegistration.new(App.config).call(account_data)
+            registration = Form::Registration.new.call(routing.params)
+
+            if registration.failure?
+              flash[:error] = Form.validation_errors(registration)
+              routing.redirect @register_route
+            end
+
+            VerifyRegistration.new(App.config).call(registration)
 
             flash[:notice] = 'Please check your email for a verification link'
-            routing.redirect '/'
+            routing.redirect @register_route
           rescue VerifyRegistration::ApiServerError => e
             App.logger.warn "API server error: #{e.inspect}\n#{e.backtrace}"
             flash[:error] = 'Our servers are not responding -- please try later'
             routing.redirect @register_route
           rescue StandardError => e
             App.logger.warn "Could not process registration: #{e.inspect}"
-            flash[:error] = 'Registration process failed -- please try later'
+            flash[:error] = 'Registration process failed -- please contact us'
             routing.redirect @register_route
           end
         end
 
         # GET /auth/register/<token>
         routing.get String do |registration_token|
-          flash.now[:notice] = 'Email verified! Please create a password'
+          flash.now[:notice] = 'Email verified! Please create a name and password'
           new_account = SecureMessage.new(registration_token).decrypt
-          view :register_confirm, locals: { new_account:, registration_token: }
+          ViewRenderer.new(self, content: 'pages/register_confirm', layouts: ['layouts/auth', 'layouts/root'],
+                                 locals: { new_account:, registration_token: }).render
+          # view :register_confirm, locals: { new_account:, registration_token: }
         end
       end
 
