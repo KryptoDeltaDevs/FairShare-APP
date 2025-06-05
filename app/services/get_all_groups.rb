@@ -10,10 +10,9 @@ module FairShare
     end
 
     def call(current_account)
-      response = HTTP.auth("Bearer #{current_account.auth_token}")
-                    .get("#{@config.API_URL}/groups")
+      response = HTTP.auth("Bearer #{current_account.auth_token}").get("#{@config.API_URL}/groups")
 
-      response.code == 200 ? JSON.parse(response.to_s)['data'] : nil
+      response.code == 200 ? JSON.parse(response.to_s) : nil
     end
   end
 end

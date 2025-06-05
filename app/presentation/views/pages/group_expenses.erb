@@ -1,0 +1,43 @@
+<div class="">
+    <a href="<%= @group_route %>/add_expense" class="font-medium rounded-lg text-lg px-4 py-2 border border-gray-300 transition">Add Expense</a>
+</div>
+
+<div class="flex flex-col gap-4">
+    <% group.expenses.each do |expense| %>
+        <div class="px-4 py-3 space-y-2 rounded border border-gray-300 shadow font-medium">
+            <h2 class="text-xl font-semibold">
+                <%= expense.name %>
+            </h2>
+            <h3>
+                <%= expense.description %>
+            </h3>
+            <h3>
+                NTD <%= expense.total_amount.to_f %> by <%= expense.payer.name %>
+            </h3>
+            <% is_payer = expense.payer_id == current_account.id %>
+            <% if is_payer %>
+                <h3>
+                    You paid this expense
+                </h3>
+            <% else %>
+                <% split = group.expense_splits.find { |s| s.expense_id == expense.id && s.account_id == current_account.id } %>
+                <% owed = split ? split.amount_owed.to_f : 0.0 %>
+
+                <% payments = group.payments.select { |p| p.expense.id == expense.id && p.from_account.id == current_account.id } %>
+                <% paid = payments.sum { |p| p.amount.to_f } %>
+
+                <% net_owed = owed - paid %>
+
+                <h3 class="<%= net_owed > 0.0 ? 'text-red-400' : 'text-black'%> ">
+                    You owed NTD <%= net_owed %>
+                </h3>
+            <% end %>
+            <h4>
+                <%= DateTime.parse(expense.created_at).strftime("%B %-d, %Y at %-I:%M %p %Z") %>
+            </h4>
+            <% unless is_payer %>
+                <a class="px-4 py-2 border border-gray-300" href="#">Pay</a>
+            <% end %>
+        </div>
+    <% end %>
+</div>

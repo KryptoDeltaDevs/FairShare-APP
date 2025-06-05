@@ -4,9 +4,9 @@ require_relative 'form_base'
 
 module FairShare
   module Form
-    class LoginFairShare < Dry::Validation::Contract
+    class LoginCredentials < Dry::Validation::Contract
       params do
-        required(:name).filled
+        required(:email).filled
         required(:password).filled
       end
     end
@@ -15,7 +15,7 @@ module FairShare
       config.messages.load_paths << File.join(__dir__, 'errors/account_details.yml')
 
       params do
-        required(:name).filled(format?: NAME_REGEX, min_size?: 4)
+        required(:name).filled(format?: NAME_REGEX, min_size?: 5)
         required(:email).filled(format?: EMAIL_REGEX)
       end
     end
@@ -33,15 +33,11 @@ module FairShare
       end
 
       rule(:password) do
-        unless enough_entropy?(value)
-          key.failure('Password must be more complex')
-        end
+        key.failure('Password must be more complex') unless enough_entropy?(value)
       end
 
       rule(:password, :password_confirm) do
-        unless values[:password].eql?(values[:password_confirm])
-          key.failure('Passwords do not match')
-        end
+        key.failure('Password do not match') unless values[:password].eql?(values[:password_confirm])
       end
     end
   end

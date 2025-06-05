@@ -1,0 +1,12 @@
+<div>
+    <% group.payments.each do |payment| %>
+        <div class="px-4 py-3 border border-gray-300 rounded shadow space-y-2">
+            <h2 class="text-lg font-semibold">
+                <%= payment.from_account.name %> paid <%= payment.to_account.name %> NTD <%= payment.amount.to_f %> for <%= payment.expense.name %>
+            </h2>
+            <p>
+                <%= DateTime.parse(payment.created_at).strftime("%B %-d, %Y at %-I:%M %p %Z") %>
+            </p>
+        </div>
+    <% end %>
+</div>
