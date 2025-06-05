@@ -9,7 +9,8 @@ module FairShare
 
     def initialize(group_list)
       @all = group_list.map do |group|
-      Group.new(group)
+        Group.new(group)
+      end
     end
   end
 end
