@@ -1,0 +1,19 @@
+<div class="border-b-2 border-gray-300 py-3">
+    <h1 class="text-2xl font-semibold">Account</h1>
+</div>
+
+<div class="grid lg:grid-cols-2 gap-4 font-medium">
+    <div class="border border-gray-300 rounded shadow p-4 space-y-2">
+        <h1>Name</h1>
+        <h2 class="text-2xl font-semibold"><%= current_account.name %></h2>
+    </div>
+
+    <div class="border border-gray-300 rounded shadow p-4 space-y-2">
+        <h1>Email</h1>
+        <h2 class="text-2xl font-semibold"><%= current_account.email %></h2>
+    </div>
+</div>
+
+<div>
+    <a href="/auth/logout" class="border border-gray-300 px-4 py-2 rounded">Logout</a>
+</div>

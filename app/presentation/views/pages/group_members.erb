@@ -1,0 +1,39 @@
+<div class="flex flex-col gap-4">
+    <% group.members.each do |member| %>
+            <div class="px-4 py-3 space-y-2 border border-gray-300 rounded shadow">
+                <h2 class="font-semibold text-lg">
+                    <%= member.name %>
+                </h2>
+                <% unless member.id == current_account.id %>
+                    <%# --- Calculate how much this member owes you --- %>
+                    <% member_owes_you = group.expenses.select { |expense| expense.payer_id == current_account.id }.sum do |expense|
+                        split = group.expense_splits.find { |s| s.expense_id == expense.id && s.account_id == member.id }
+                        split ? split.amount_owed.to_f : 0.0
+                        end %>
+                    <%# --- Calculate how much you owe this member --- %>
+                    <% you_owe_member = group.expenses.select { |expense| expense.payer_id == member.id }.sum do |expense|
+                        split = group.expense_splits.find { |s| s.expense_id == expense.id && s.account_id == current_account.id }
+                        split ? split.amount_owed.to_f : 0.0
+                        end %>
+                    <%# --- Payments from member to you --- %>
+                    <% payments_from_member = group.payments.select { |p| p.from_account.id == member.id && p.to_account.id == current_account.id }.sum { |p| p.amount.to_f }%>
+
+                    <%# --- Payments from you to member --- %>
+                    <% payments_to_member = group.payments.select { |p| p.from_account.id == current_account.id && p.to_account.id == member.id }.sum { |p| p.amount.to_f }%>
+
+                    <%# --- Final net balance --- %>
+                    <% net_balance = member_owes_you - you_owe_member - payments_from_member + payments_to_member %>
+
+                    <p class="font-medium <%= net_balance > 0 ? 'text-[#87af5a]' : net_balance < 0 ? 'text-red-400' : 'text-black'%>">
+                        <% if net_balance > 0 %>
+                            Owes you NTD <%= net_balance.round(2) %>
+                        <% elsif net_balance < 0 %>
+                            You owe NTD <%= net_balance.abs.round(2) %>
+                        <% else %>
+                            No debts
+                        <% end %>
+                    </p>
+                <% end %>
+            </div>
+    <% end %>
+</div>

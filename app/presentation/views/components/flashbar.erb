@@ -1,0 +1,10 @@
+<% if flash[:notice] %>
+    <div class="lg:static fixed top-0 bg-[#87af5a] border-2 border-[#648c44] shadow-md font-medium text-sm px-4 py-3">
+        <%= flash[:notice] %>
+    </div>
+<% end %>
+<% if flash[:error] %>
+    <div class="lg:static fixed top-0 bg-red-400 border-2 border-red-500 shadow-md font-medium text-sm px-4 py-3">
+        <%= flash[:error] %>
+    </div>
+<% end %>

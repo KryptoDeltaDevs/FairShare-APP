@@ -1,0 +1,27 @@
+<div class="border-b-2 border-gray-300 py-3 flex justify-between items-center">
+    <h1 class="text-2xl font-semibold">Groups</h1>
+    <a href="groups/create">
+        <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        class="w-8 hover:bg-[#15343c] rounded-full p-1 hover:text-white transition"
+        >
+        <path d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z"></path>
+        </svg>
+    </a>
+</div>
+
+
+<div class="flex flex-col gap-4">
+    <% groups.all.each do |group| %>
+        <a href="groups/<%= group.id %>">
+            <div
+            class="border rounded-lg space-y-4 px-4 py-3 bg-[#465b64] hover:bg-[#375057] transition text-white shadow"
+            >
+                <h2 class="text-2xl font-medium"><%= group.name %></h2>
+                <p><%= group.description %></p>
+            </div>
+        </a>
+    <% end%>
+</div>
