@@ -6,12 +6,11 @@ class StringSecurity
   def self.entropy(string)
     length = string.length
     counts = string.chars.uniq
-                   .map { |c| [c, string.count(c).to_f] }
-                   .to_h
-  
+                   .to_h { |c| [c, string.count(c).to_f] }
+
     counts.values.reduce(0) do |entropy, count|
       prob = count / length
-      entropy - prob * Math.log2(prob)
+      entropy - (prob * Math.log2(prob))
     end
   end
 end

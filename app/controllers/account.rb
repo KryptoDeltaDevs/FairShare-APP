@@ -9,9 +9,9 @@ module FairShare
     route('account') do |routing|
       @path = 'account'
       routing.on do
-        routing.redirect '/auth/login' unless @current_account.logged_in?
         # GET /account/id
         routing.get String do |id|
+          routing.redirect '/auth/login' unless @current_account.logged_in?
           if @current_account && @current_account.id == id
             ViewRenderer.new(self,
                              content: 'pages/account',

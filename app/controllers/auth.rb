@@ -78,7 +78,6 @@ module FairShare
           new_account = SecureMessage.new(registration_token).decrypt
           ViewRenderer.new(self, content: 'pages/register_confirm', layouts: ['layouts/auth', 'layouts/root'],
                                  locals: { new_account:, registration_token: }).render
-          # view :register_confirm, locals: { new_account:, registration_token: }
         end
       end
 

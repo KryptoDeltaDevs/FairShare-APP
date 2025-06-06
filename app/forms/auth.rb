@@ -15,7 +15,6 @@ module FairShare
       config.messages.load_paths << File.join(__dir__, 'errors/account_details.yml')
 
       params do
-        required(:name).filled(format?: NAME_REGEX, min_size?: 5)
         required(:email).filled(format?: EMAIL_REGEX)
       end
     end
