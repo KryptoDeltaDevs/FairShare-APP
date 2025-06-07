@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
-require 'http'
-
 module FairShare
-  # Create a new configuration file for a group
-  class CreateNewGroup
+  class AddExpense
     def initialize(config)
       @config = config
     end
@@ -13,10 +10,10 @@ module FairShare
       @config.API_URL
     end
 
-    def call(current_account:, group_data:)
-      config_url = "#{api_url}/groups"
+    def call(current_account, expense, split_expense, group_id)
       response = HTTP.auth("Bearer #{current_account.auth_token}")
-                     .post(config_url, json: group_data)
+                     .post("#{api_url}/groups/#{group_id}/expenses",
+                           json: { expense:, split_expense: })
 
       response.code == 201 ? JSON.parse(response.body.to_s) : raise
     end

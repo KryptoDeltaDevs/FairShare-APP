@@ -15,7 +15,6 @@ module FairShare
     private
 
     def process_attributes(attributes)
-      puts "Attributes: #{attributes}"
       @id = attributes['id']
       @expense_id = attributes['expense_id']
       @amount = attributes['amount']
