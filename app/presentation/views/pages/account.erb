@@ -12,6 +12,11 @@
         <h1>Email</h1>
         <h2 class="text-2xl font-semibold"><%= current_account.email %></h2>
     </div>
+
+    <div class="col-span-2 border border-gray-300 rounded shadow p-4 space-y-2 h-auto">
+        <h1>API Key</h1>
+        <h2 class="text-2xl font-semibold text-wrap break-words"><%= current_account.auth_token %></h2>
+    </div>
 </div>
 
 <div>

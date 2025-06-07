@@ -9,17 +9,15 @@ module FairShare
     route('account') do |routing|
       @path = 'account'
       routing.on do
-        # GET /account/id
+        # GET /account/[id]
         routing.get String do |id|
           routing.redirect '/auth/login' unless @current_account.logged_in?
-          if @current_account && @current_account.id == id
-            ViewRenderer.new(self,
-                             content: 'pages/account',
-                             layouts: ['layouts/dashboard', 'layouts/root'],
-                             locals: { current_account: @current_account }).render
-          else
-            routing.redirect '/auth/login'
-          end
+          account = GetAccountDetails.new(App.config).call(@current_account, id)
+
+          ViewRenderer.new(self,
+                           content: 'pages/account',
+                           layouts: ['layouts/dashboard', 'layouts/root'],
+                           locals: { current_account: account }).render
         end
 
         # POST /account/<registration_token>

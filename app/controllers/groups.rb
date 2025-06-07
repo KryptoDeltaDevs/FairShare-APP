@@ -148,6 +148,7 @@ module FairShare
 
           routing.on 'pay' do
             routing.is do
+              # POST /groups/[group_id]/pay
               routing.post do
                 CreatePayment.new(App.config).call(
                   current_account: @current_account,
