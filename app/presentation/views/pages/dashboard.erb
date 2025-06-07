@@ -6,14 +6,14 @@
         <div class="flex justify-between items-center">
             <h2 class="text-2xl font-medium">Money you owed</h2>
         </div>
-    <h3 class="text-4xl font-bold">NTD <%= owe['owed_to_others'] %></h3>
+    <h3 class="text-4xl font-bold text-red-400">NTD <%= owe['owed_to_others'] %></h3>
     </div>
 
     <div class="border rounded-lg space-y-4 px-4 py-3 bg-[#465b64] hover:bg-[#375057] transition text-white shadow">
         <div class="flex justify-between items-center">
             <h2 class="text-2xl font-medium">Money others owed</h2>
         </div>
-        <h3 class="text-4xl font-bold">NTD <%= owe['owed_by_others'] %></h3>
+        <h3 class="text-4xl font-bold text-[#87af5a]">NTD <%= owe['owed_by_others'] %></h3>
     </div>
 
     <%# <div

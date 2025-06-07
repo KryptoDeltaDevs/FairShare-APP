@@ -141,7 +141,7 @@ module FairShare
               SendInvitation.new(App.config).call(current_account: @current_account, group_id:,
                                                   target_email: target_account['email'])
 
-              flash[:notice] = 'Please check your email for a verification link'
+              flash[:notice] = 'Invitation sent'
               routing.redirect "#{@group_route}?tab=members"
             end
           end

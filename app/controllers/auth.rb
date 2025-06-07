@@ -66,7 +66,6 @@ module FairShare
             flash[:error] = 'Our servers are not responding -- please try later'
             routing.redirect @register_route
           rescue StandardError => e
-            puts "#{e.message}\n#{e.backtrace}"
             App.logger.warn "Could not process registration: #{e.inspect}"
             flash[:error] = 'Registration process failed -- please contact us'
             routing.redirect @register_route
