@@ -20,7 +20,7 @@ describe 'Test Service Objects' do
       auth_return_json = File.read(auth_account_file)
 
       WebMock.stub_request(:post, "#{API_URL}/auth/authenticate")
-             .with(body: @credentials.to_json)
+             .with(body: SignedMessage.sign(@credentials).to_json)
              .to_return(body: auth_return_json,
                         headers: { 'content-type' => 'application/json' })
 
@@ -34,7 +34,7 @@ describe 'Test Service Objects' do
 
     it 'BAD: should not find a false authenticated account' do
       WebMock.stub_request(:post, "#{API_URL}/auth/authenticate")
-             .with(body: @mal_credentials.to_json)
+             .with(body: SignedMessage.sign(@credentials).to_json)
              .to_return(status: 403)
       _(proc {
         FairShare::AuthenticateAccount.new(app.config).call(**@mal_credentials)
