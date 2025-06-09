@@ -38,6 +38,7 @@ module FairShare
     ONE_WEEK = 7 * 24 * 60 * 60
     @redis_url = ENV.delete('REDISCLOUD_URL')
     SecureMessage.setup(ENV.delete('MSG_KEY'))
+    SignedMessage.setup(ENV.delete('SIGNING_KEY'))
     SecureSession.setup(@redis_url)
 
     configure :development, :test do

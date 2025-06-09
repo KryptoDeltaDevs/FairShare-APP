@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'http'
+require_relative './app'
 
 module FairShare
   TABS = %w[expenses members payments].freeze

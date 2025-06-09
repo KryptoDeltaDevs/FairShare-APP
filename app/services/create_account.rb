@@ -12,13 +12,11 @@ module FairShare
     end
 
     def call(name:, email:, password:)
-      message = { name:,
-                  email:,
-                  password: }
+      account = { name: , email: , password: }
 
       response = HTTP.post(
         "#{@config.API_URL}/accounts/",
-        json: message
+        json: SignedMessage.sign(account)
       )
 
       raise InvalidAccount unless response.code == 201
