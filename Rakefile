@@ -62,7 +62,7 @@ namespace :generate do
   end
 end
 
-namespace :url doAdd commentMore actions
+namespace :url do
   # usage: $ rake url:integrity URL=http://example.org/script.js
   desc 'Generate integrity hash for a URL'
   task :integrity do
