@@ -1,0 +1,30 @@
+<div class="space-y-4 border px-4 py-3 rounded border-gray-300 shadow">
+    <div class="flex justify-between items-center">
+        <h1 class="lg:text-2xl text-xl font-semibold"><%= group.name %></h1>
+        <% if group.policies.can_edit %>
+            <div class="flex gap-4">
+                <a href="<%= @group_route %>/edit">
+                    <svg class="w-10 hover:bg-[#15343c] rounded-full p-1 hover:text-white transition" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M5 18.89H6.41421L15.7279 9.57627L14.3137 8.16206L5 17.4758V18.89ZM21 20.89H3V16.6473L16.435 3.21231C16.8256 2.82179 17.4587 2.82179 17.8492 3.21231L20.6777 6.04074C21.0682 6.43126 21.0682 7.06443 20.6777 7.45495L9.24264 18.89H21V20.89ZM15.7279 6.74785L17.1421 8.16206L18.5563 6.74785L17.1421 5.33363L15.7279 6.74785Z"></path></svg>
+                </a>
+            </div>
+        <% end %>
+    </div>
+    <h2 class="lg:text-xl"><%= group.description %></h2>
+</div>
+
+<nav class="w-full flex overflow-auto">
+    <% tabs.each do |tab| %>
+        <a class="<%= current_tab == tab ? 'bg-[#15343c] text-white border-[#15343c]' : 'hover:bg-[#2c444b] hover:text-white transition'%> border border-gray-300 border-x-[0.5px] text-center w-full first:border-l last:border-r first:rounded-tl-lg last:rounded-tr-lg lg:text-xl font-semibold px-4 py-3 capitalize" href="?tab=<%= tab %>"><%= tab %></a>
+    <% end %>
+</nav>
+
+<% case current_tab %>
+<% when 'expenses'%>
+    <%= render('pages/group_expenses', locals: { current_account:, group: }) %>
+<% when 'members'%>
+    <%= render('pages/group_members', locals: { current_account:, group: }) %>
+<% when 'payments'%>
+    <%= render('pages/group_payments', locals: { current_account:, group: }) %>
+<% when 'settings'%>
+    <%= render('pages/group_settings', locals: { current_account:, group: }) %>
+<% end %>

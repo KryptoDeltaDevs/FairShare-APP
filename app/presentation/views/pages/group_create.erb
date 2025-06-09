@@ -1,0 +1,26 @@
+<div class="border-b-2 border-gray-300 py-3 flex justify-between items-center">
+    <h1 class="text-xl lg:text-2xl font-semibold">Create New Group</h1>
+    <a href="/groups">
+        <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            viewBox="0 0 24 24" 
+            fill="currentColor"
+            class="w-8 hover:bg-[#15343c] rounded-full p-1 hover:text-white transition">
+                <path d="M7.82843 10.9999H20V12.9999H7.82843L13.1924 18.3638L11.7782 19.778L4 11.9999L11.7782 4.22168L13.1924 5.63589L7.82843 10.9999Z"></path>
+        </svg>
+    </a>
+</div>
+
+<div>
+    <form method="post" action="/groups/create" class="space-y-6 mt-4">
+        <label for="name" class="flex flex-col gap-4 text-lg font-medium">
+            Name
+            <input class="px-4 py-2 border border-gray-300 rounded text-base font-normal" type="text" name="name" id="name" placeholder="Enter the group name">
+        </label>
+        <label for="description" class="flex flex-col gap-4 text-lg font-medium">
+            Description
+            <input class="px-4 py-2 border border-gray-300 rounded text-base font-normal" type="text" name="description" id="description" placeholder="Enter the group description">
+        </label>
+        <input type="submit" class="bg-[#465b64] hover:bg-[#375057] transition text-white cursor-pointer w-full px-4 py-2 rounded font-medium" value="Create">
+    </form>
+</div>

@@ -7,27 +7,29 @@ module FairShare
   # Web controller for FairShare API
   class App < Roda
     route('account') do |routing|
+      @path = 'account'
       routing.on do
-        # GET /account/id
+        # GET /account/[id]
         routing.get String do |id|
-          if @current_account && @current_account.id == id
-            view :account, locals: { current_account: @current_account }
-          else
-            routing.redirect '/auth/login'
-          end
+          routing.redirect '/auth/login' unless @current_account.logged_in?
+          account = GetAccountDetails.new(App.config).call(@current_account, id)
+
+          ViewRenderer.new(self,
+                           content: 'pages/account',
+                           layouts: ['layouts/dashboard', 'layouts/root'],
+                           locals: { current_account: account }).render
         end
 
         # POST /account/<registration_token>
         routing.post String do |registration_token|
-          raise 'Passwords do not match or empty' if
-            routing.params['password'].empty? ||
-            routing.params['password'] != routing.params['password_confirm']
+          passwords = Form::Passwords.new.call(routing.params)
+          raise Form.message_values(passwords) if passwords.failure?
 
           new_account = SecureMessage.new(registration_token).decrypt
           CreateAccount.new(App.config).call(
             name: routing.params['name'],
             email: new_account['email'],
-            password: routing.params['password']
+            password: passwords['password']
           )
           flash[:notice] = 'Account created! Please login'
           routing.redirect '/auth/login'

@@ -1,0 +1,7 @@
+<div class="flex lg:flex-row flex-col lg:gap-4">
+    <%= render('components/navbar') %>
+    <div class="flex flex-col gap-4 w-full lg:w-[93%] lg:px-0 lg:pr-4 px-4 py-2">
+        <%= render('components/flashbar') %>
+        <%= yield %>
+    </div>
+</div>

@@ -1,4 +1,3 @@
 en:
   errors:
-    name: must be at least four English letters and numbers, with dots allowed in-between
-    email: must be a valid address
+    email: must be a valid adddress

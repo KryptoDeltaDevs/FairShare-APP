@@ -1,0 +1,41 @@
+<div class="border-b-2 border-gray-300 py-3">
+    <h1 class="text-xl lg:text-2xl font-semibold">Dashboard</h1>
+</div>
+<div class="grid lg:grid-cols-2 gap-4">
+    <div class="border rounded-lg space-y-4 px-4 py-3 bg-[#465b64] hover:bg-[#375057] transition text-white shadow">
+        <div class="flex justify-between items-center">
+            <h2 class="text-2xl font-medium">Money you owed</h2>
+        </div>
+    <h3 class="text-4xl font-bold text-red-400">NTD <%= owe['owed_to_others'] %></h3>
+    </div>
+
+    <div class="border rounded-lg space-y-4 px-4 py-3 bg-[#465b64] hover:bg-[#375057] transition text-white shadow">
+        <div class="flex justify-between items-center">
+            <h2 class="text-2xl font-medium">Money others owed</h2>
+        </div>
+        <h3 class="text-4xl font-bold text-[#87af5a]">NTD <%= owe['owed_by_others'] %></h3>
+    </div>
+
+    <%# <div
+        class="col-span-full border rounded-lg space-y-4 px-4 py-3 bg-[#465b64] hover:bg-[#375057] transition text-white shadow"
+    >
+        <div class="flex justify-between items-center">
+        <h2 class="text-2xl font-medium">Transaction Summary</h2>
+        </div>
+        <div class="flex gap-2">
+        <button class="border px-3 py-2 rounded-lg">One Week</button>
+        <button class="border px-3 py-2 rounded-lg">One Month</button>
+        <button class="border px-3 py-2 rounded-lg">One Year</button>
+        </div>
+        <div class="flex flex-col gap-4">
+        <div class="grid grid-cols-4 text-2xl">
+            <h3 class="col-span-2 text-start">You owed</h3>
+            <h4 class="col-span-2 text-end text-red-400">-NTD 10,000</h4>
+        </div>
+        <div class="grid grid-cols-4 text-2xl">
+            <h3 class="col-span-2 text-start">Others owed</h3>
+            <h4 class="col-span-2 text-end text-[#87af5a]">NTD 10,000</h4>
+        </div>
+        </div>
+    </div> %>
+</div>

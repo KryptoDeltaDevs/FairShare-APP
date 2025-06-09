@@ -1,0 +1,28 @@
+<div class="flex flex-col items-center gap-4">
+    <div class="flex items-center ">
+        <img class="lg:w-20 lg:h-20 w-16 h-16" src="/logo.png" alt="FairShare Logo">
+    </div>
+    <div class="self-start">
+        <h2 class="font-medium text-xl">Complete your registration</h2>
+    </div>
+</div>
+
+<form action="<%= "/account/#{registration_token}" %>" method="post" class="space-y-6 mt-4">
+    <label for="name" class="flex flex-col gap-4 text-lg font-medium">
+        Name
+        <input class="px-4 py-2 border border-gray-300 rounded text-base font-normal" type="text" name="name" id="name" placeholder="Enter your name">
+    </label>
+    <label for="email" class="flex flex-col gap-4 text-lg font-medium">
+        Email
+        <input class="px-4 py-2 border border-gray-300 rounded text-base font-normal" type="email" name="email" id="email" placeholder="Enter your email" value="<%= "#{new_account['email']}"%>">
+    </label>
+    <label for="password" class="flex flex-col gap-4 text-lg font-medium">
+        Password
+        <input class="px-4 py-2 border border-gray-300 rounded text-base font-normal" type="password" name="password" id="password" placeholder="Enter your password">
+    </label>
+    <label for="password_confirm" class="flex flex-col gap-4 text-lg font-medium">
+        Confirm Password
+        <input class="px-4 py-2 border border-gray-300 rounded text-base font-normal" type="password" name="password_confirm" id="password_confirm" placeholder="Re-enter your password">
+    </label>
+    <input type="submit" class="bg-[#465b64] hover:bg-[#375057] transition text-white cursor-pointer w-full px-4 py-2 rounded font-medium" value="Register">
+</form>

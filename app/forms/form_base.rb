@@ -5,10 +5,8 @@ require 'dry-validation'
 module FairShare
   # Form helpers
   module Form
-    NAME_REGEX = /^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$/.freeze
-    EMAIL_REGEX = /@/.freeze
-    FILENAME_REGEX = %r{^((?![&\/\\\{\}\|\t]).)*$}.freeze
-    PATH_REGEX = /^((?![&\{\}\|\t]).)*$/.freeze
+    NAME_REGEX = /^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$/
+    EMAIL_REGEX = /@/
 
     def self.validation_errors(validation)
       validation.errors.to_h.map { |k, v| [k, v].join(' ') }.join('; ')

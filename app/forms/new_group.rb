@@ -9,7 +9,7 @@ module FairShare
 
       params do
         required(:name).filled
-        optional(:repo_url).maybe(format?: URI::DEFAULT_PARSER.make_regexp)
+        required(:description).filled
       end
     end
   end
