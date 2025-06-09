@@ -4,7 +4,6 @@ require 'delegate'
 require 'roda'
 require 'figaro'
 require 'logger'
-require 'rack/ssl-enforcer'
 require 'rack/session'
 require 'rack/session/redis'
 require_relative '../require_app'
@@ -17,11 +16,11 @@ module FairShare
     plugin :environments
 
     Figaro.application = Figaro::Application.new(
-      environment:,
+      environment: environment,
       path: File.expand_path('config/secrets.yml')
     )
     Figaro.load
-    def self.config = Figaro.env
+    def self.config() = Figaro.env
 
     # HTTP Request logging
     configure :development, :production do
@@ -30,7 +29,7 @@ module FairShare
 
     # Custom events logging
     LOGGER = Logger.new($stderr)
-    def self.logger = LOGGER
+    def self.logger() = LOGGER
 
     # Allows binding.pry in dev/test and rake console in production
     require 'pry'
@@ -44,17 +43,23 @@ module FairShare
     configure :development, :test do
       logger.level = Logger::ERROR
 
-      # NOTE: env var REDIS_URL only used to wipe the session store (ok to be nil)
-      SecureSession.setup(ENV.fetch('REDIS_URL', nil))
+      #     secret: config.SESSION_SECRET,Add commentMore actions
+      #     expire_after: ONE_MONTH,
+      #     httponly: true,
+      #     same_site: :lax
+      use Rack::Session::Pool,
+        expire_after: ONE_MONTH,
+        httponly: true,
+        same_site: :lax
 
-      # use Rack::Session::Cookie, expire_after: ONE_WEEK, secret: config.SESSION_SECRET
-
-      use Rack::Session::Pool, expire_after: ONE_WEEK
-
-      # use Rack::Session::Redis, expire_after: ONE_WEEK, redis_server: @redis_url
+      # use Rack::Session::Redis,
+      #     expire_after: ONE_MONTH,
+      #     redis_server: @redis_url
 
       # Allows running reload! in pry to restart entire app
-      def self.reload! = exec 'pry -r ./spec/test_load_all'
+      def self.reload!
+        exec 'pry -r ./spec/test_load_all'
+      end
     end
 
     configure :production do
