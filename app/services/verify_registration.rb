@@ -12,7 +12,7 @@ module FairShare
       @config = config
     end
 
-    def call(registration_data)
+    def call(registration_data) # rubocop:disable Metrics/MethodLength
       reg_details = registration_data.to_h
       registration_token = SecureMessage.encrypt(reg_details)
       reg_details['verification_url'] = "#{@config.APP_URL}/auth/register/#{registration_token}"

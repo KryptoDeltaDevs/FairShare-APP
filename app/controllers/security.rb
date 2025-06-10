@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative './app'
+require_relative 'app'
 require 'roda'
 
 require 'rack/ssl-enforcer'
@@ -12,9 +12,8 @@ module FairShare
     plugin :environments
     plugin :multi_route
 
-    FONT_SRC = %w[https://cdn.jsdelivr.net].freeze
-    SCRIPT_SRC = %w[https://cdn.jsdelivr.net].freeze
-    STYLE_SRC = %w[https://bootswatch.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com].freeze
+    SCRIPT_SRC = %w[https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4].freeze
+    STYLE_SRC = %w[https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4].freeze
 
     configure :production do
       use Rack::SslEnforcer, hsts: true
@@ -48,9 +47,8 @@ module FairShare
         child_src: %w['self'],
         connect_src: %w[wws:],
         img_src: %w['self'],
-        font_src: %w['self'] + FONT_SRC,
         script_src: %w['self'] + SCRIPT_SRC,
-        style_src: %W['self'] + STYLE_SRC,
+        style_src: %W['self' 'unsafe-inline'] + STYLE_SRC,
         form_action: %w['self'],
         frame_ancestors: %w['none'],
         object_src: %w['none'],

@@ -20,7 +20,7 @@ module FairShare
       path: File.expand_path('config/secrets.yml')
     )
     Figaro.load
-    def self.config() = Figaro.env
+    def self.config = Figaro.env
 
     # HTTP Request logging
     configure :development, :production do
@@ -29,7 +29,7 @@ module FairShare
 
     # Custom events logging
     LOGGER = Logger.new($stderr)
-    def self.logger() = LOGGER
+    def self.logger = LOGGER
 
     # Allows binding.pry in dev/test and rake console in production
     require 'pry'
@@ -49,9 +49,9 @@ module FairShare
       #     httponly: true,
       #     same_site: :lax
       use Rack::Session::Pool,
-        expire_after: ONE_MONTH,
-        httponly: true,
-        same_site: :lax
+          expire_after: ONE_WEEK,
+          httponly: true,
+          same_site: :lax
 
       # use Rack::Session::Redis,
       #     expire_after: ONE_MONTH,

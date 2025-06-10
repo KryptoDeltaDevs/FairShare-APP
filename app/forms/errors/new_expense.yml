@@ -1,3 +1,4 @@
 en:
   errors:
-    content: "provide content"
+    name: "Expense name must be filled"
+    total_amount: "Expense amount must be filled"

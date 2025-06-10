@@ -5,7 +5,8 @@ require 'ostruct'
 module FairShare
   # Behaviors of the currently logged in account
   class Group
-    attr_reader :id, :name, :description, :owner, :members, :expenses, :expense_splits, :payments, :policies
+    attr_reader :id, :name, :description, :owner, :members, :group_members, :expenses, :expense_splits, :payments,
+                :policies
 
     def initialize(group_info)
       process_attributes(group_info['attributes'])
@@ -26,6 +27,7 @@ module FairShare
 
       @owner = Account.new(relationships['owner'])
       @members = process_members(relationships['members'])
+      @group_members = process_group_members(relationships['group_members'])
       @expenses = process_expenses(relationships['expenses'])
       @expense_splits = process_expense_splits(relationships['expense_splits'])
       @payments = process_payments(relationships['payments'])
@@ -35,6 +37,12 @@ module FairShare
       return nil unless members
 
       members.map { |member| Account.new(member) }
+    end
+
+    def process_group_members(group_members)
+      return nil unless group_members
+
+      group_members.map { |group_member| GroupMember.new(group_member) }
     end
 
     def process_expenses(expenses)

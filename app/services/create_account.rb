@@ -12,7 +12,7 @@ module FairShare
     end
 
     def call(name:, email:, password:)
-      account = { name: , email: , password: }
+      account = { name:, email:, password: }
 
       response = HTTP.post(
         "#{@config.API_URL}/accounts/",

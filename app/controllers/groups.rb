@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'http'
-require_relative './app'
+require_relative 'app'
 
 module FairShare
   TABS = %w[expenses members payments].freeze
@@ -15,7 +15,7 @@ module FairShare
         @groups_route = '/groups'
 
         routing.on 'create' do
-          # GET /groups/[group_id]/create
+          # GET /groups/create
           routing.get do
             group_list = GetAllGroups.new(App.config).call(@current_account)
             groups = Groups.new(group_list)
@@ -23,12 +23,12 @@ module FairShare
                                    locals: { current_account: @current_account, groups: }).render
           end
 
-          # POST /groups/[group_id]/create
+          # POST /groups/create
           routing.post do
             group_data = Form::NewGroup.new.call(routing.params)
 
             if group_data.failure?
-              flash[:error] = Form.message_values(group_data)
+              flash[:error] = Form.validation_errors(group_data)
               routing.halt
             end
 
@@ -67,7 +67,7 @@ module FairShare
               group_data = Form::NewGroup.new.call(routing.params)
 
               if group_data.failure?
-                flash[:error] = Form.message_values(group_data)
+                flash[:error] = Form.validation_errors(group_data)
                 routing.halt
               end
 
@@ -102,6 +102,12 @@ module FairShare
             # POST /groups/[group_id]/add_expense
             routing.post do
               split_expense = SplitExpense.new.call(routing.params, group.members)
+              expense_data = Form::NewExpense.new.call(routing.params)
+              if expense_data.failure?
+                flash[:error] = Form.validation_errors(expense_data)
+                # routing.halt
+                routing.redirect "#{@group_route}/add_expense"
+              end
               expense = {
                 payer_id: @current_account.id,
                 total_amount: routing.params['total_amount'].to_f,
@@ -139,11 +145,48 @@ module FairShare
             # POST /groups/[group_id]/add_member
             routing.post do
               target_account = routing.params
+
               SendInvitation.new(App.config).call(current_account: @current_account, group_id:,
                                                   target_email: target_account['email'])
 
               flash[:notice] = 'Invitation sent'
               routing.redirect "#{@group_route}?tab=members"
+            end
+          end
+
+          routing.on 'update_access' do
+            # POST /groups/[group_id]/update_access
+            routing.post do
+              group_info = GetGroup.new(App.config).call(@current_account, group_id)
+
+              group = Group.new(group_info)
+
+              group_members = group.group_members.reject do |group_member|
+                if group_member.account_id == @current_account.id
+                  true
+                else
+                  value = routing.params[group_member.account_id] == 'true'
+                  group_member.can_add_expense == value
+                end
+              end
+
+              puts group_members.inspect
+
+              if group_members.empty?
+                flash[:notice] = 'Nothing updated'
+                routing.redirect "#{@group_route}?tab=settings"
+              end
+
+              UpdateAccess.new(App.config).call(current_account: @current_account,
+                                                group_members: group_members.map(&:to_h),
+                                                group_id:)
+
+              flash[:notice] = 'Members Access Updated'
+            rescue StandardError => e
+              App.logger.error "#{e.inspect}\n#{e.backtrace}"
+              flash[:error] = 'Could not update the access'
+            ensure
+              routing.redirect "#{@group_route}?tab=settings"
             end
           end
 

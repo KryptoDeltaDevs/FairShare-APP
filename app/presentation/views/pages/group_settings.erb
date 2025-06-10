@@ -1,1 +1,18 @@
-Settings
+<form action="<%= @group_route %>/update_access" method="post" class="grid grid-cols-2 gap-4">
+    <div class="col-span-2 grid grid-cols-2 font-semibold text-xl items-center">
+        <h2>Name</h2>
+        <h2 class="place-self-center">Can Add Expense</h2>
+    </div>
+    <% group.group_members.each do |group_member| %>
+        <% unless group_member.account_id == current_account.id %>
+            <% account = group.members.find { |m| m.id == group_member.account_id }%>
+            <% name = "#{group_member.account_id}" %>
+            <label for="<%= name %>" class="text-lg">
+                <%= account.name %>
+            </label>
+            <input type="hidden" name="<%= name %>" value="false"/>
+            <input type="checkbox" name="<%= name %>" id="<%= name %>" value="true" <%= 'checked' if group_member.can_add_expense %>/>
+        <% end %>
+    <% end %>
+    <input type="submit" class="col-span-2 bg-[#465b64] hover:bg-[#375057] transition text-white cursor-pointer w-full px-4 py-2 rounded font-medium" value="Update">
+</form>

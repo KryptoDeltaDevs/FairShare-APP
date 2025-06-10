@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-require_relative './app'
+require_relative 'app'
 
 module FairShare
+  # Route for dashboard
   class App < Roda
     route('dashboard') do |routing|
       @path = 'dashboard'
