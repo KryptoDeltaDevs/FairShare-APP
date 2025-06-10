@@ -170,8 +170,6 @@ module FairShare
                 end
               end
 
-              puts group_members.inspect
-
               if group_members.empty?
                 flash[:notice] = 'Nothing updated'
                 routing.redirect "#{@group_route}?tab=settings"
